@@ -190,6 +190,10 @@ section{position:relative}
 #transform{padding:120px 0}
 .ba-wrap{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;user-select:none;cursor:ew-resize;box-shadow:0 40px 90px rgba(0,0,0,.5);container-type:size}
 .ba-img{position:absolute;inset:0;background-size:cover;background-position:center}
+.ba-hint{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-size:12.5px;letter-spacing:.06em;color:#eaf2ff;background:rgba(6,7,13,.55);backdrop-filter:blur(8px);border:1px solid var(--line);padding:8px 14px;border-radius:99px;pointer-events:none;transition:opacity .5s ease,transform .5s ease;animation:bahint 2.2s ease-in-out infinite}
+.ba-hint .a{color:var(--cyan);font-size:15px;line-height:1}
+.ba-hint.gone{opacity:0;transform:translateX(-50%) translateY(-10px)}
+@keyframes bahint{0%,100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}50%{box-shadow:0 0 20px 0 rgba(34,211,238,.4)}}
 .ba-layer{position:absolute;inset:0}
 .ba-after{z-index:1}
 .ba-before{z-index:2;width:50%;border-right:2px solid var(--cyan);overflow:hidden}
@@ -447,6 +451,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
     <div class="ba-layer ba-after"><div class="ba-img" style="background-image:url(img/plan_after.webp)"></div><span class="ba-tag r" data-i18n="ba_after">Depois · Ambiente 3D</span></div>
     <div class="ba-layer ba-before" id="baBefore"><div class="ba-inner" style="background-image:url(img/plan_before.webp)"></div><span class="ba-tag l" data-i18n="ba_before">Antes · Planta 2D</span></div>
     <div class="ba-handle" id="baHandle"><div class="knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div></div>
+    <div class="ba-hint" id="baHint"><span class="a">⇄</span> <span data-i18n="ba_hint">Arraste · 2D ⇄ 3D</span></div>
   </div>
 </div></section>
 
@@ -549,7 +554,7 @@ const I18N={en:{
  svc4_h:"3D Imagery & Virtual Staging",svc4_p:"Professional renders, virtual staging of empty properties and humanized floor plans for listings, rentals and sales.",svc4_t:"From R$ 350",
  gal_tag:"Visualization",gal_h2:"Renders that look like photos —",gal_h2b:"that you can step inside.",gal_p:"Every room rebuilt in high fidelity, navigable in real time. Scroll to feel the depth.",
  ba_tag:"Technology",ba_h2:"The 2D blueprint becomes a walkable space",ba_p:"Generative AI and 3D engines rebuild your project from the technical drawing. Drag to compare.",
- ba_before:"Before · 2D Plan",ba_after:"After · 3D Space",
+ ba_before:"Before · 2D Plan",ba_after:"After · 3D Space",ba_hint:"Drag · 2D ⇄ 3D",
  vr_tag:"True immersion",vr_h2:"Put the client inside the project",
  vr_p:"With the Meta Quest 3 and our platform, residents and investors walk through the property, feel the proportions and decide with confidence — a humanized experience that builds an emotional connection with the dream.",
  vr_l1:"Accessible to people who don't use AutoCAD or Revit",vr_l2:"Runs on smartphone, tablet, computer and VR headsets",vr_l3:"Built for small and medium construction businesses",
@@ -626,12 +631,35 @@ document.querySelectorAll('.reveal,.stat').forEach(el=>io.observe(el));
 function count(n){const t=+n.dataset.count,suf=n.dataset.suffix||'';const d=1400,st=performance.now();function f(now){let p=Math.min((now-st)/d,1);p=1-Math.pow(1-p,3);n.textContent=Math.round(t*p)+suf;if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
 
 /* ===================== before/after slider ===================== */
-(function(){const ba=document.getElementById('ba'),before=document.getElementById('baBefore'),handle=document.getElementById('baHandle');let drag=false;
-function set(x){const r=ba.getBoundingClientRect();let p=Math.max(4,Math.min(96,(x-r.left)/r.width*100));before.style.width=p+'%';handle.style.left=p+'%';}
-const px=e=>e.touches?e.touches[0].clientX:e.clientX;
-ba.addEventListener('mousedown',e=>{drag=true;set(px(e));});ba.addEventListener('touchstart',e=>{drag=true;set(px(e));},{passive:true});
-addEventListener('mousemove',e=>{if(drag)set(px(e));});addEventListener('touchmove',e=>{if(drag)set(px(e));},{passive:true});
-addEventListener('mouseup',()=>drag=false);addEventListener('touchend',()=>drag=false);})();
+(function(){
+  const ba=document.getElementById('ba'),before=document.getElementById('baBefore'),handle=document.getElementById('baHandle'),hint=document.getElementById('baHint');
+  let drag=false,nudging=false,raf=0,interacted=false;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), ease=t=>t*t*(3-2*t);
+  function setP(p){p=clamp(p,4,96);before.style.width=p+'%';handle.style.left=p+'%';}
+  function set(x){const r=ba.getBoundingClientRect();setP((x-r.left)/r.width*100);}
+  const px=e=>e.touches?e.touches[0].clientX:e.clientX;
+  function stopNudge(){nudging=false;cancelAnimationFrame(raf);}
+  function interact(){interacted=true;stopNudge();if(hint)hint.classList.add('gone');}
+  ba.addEventListener('mousedown',e=>{interact();drag=true;set(px(e));});
+  ba.addEventListener('touchstart',e=>{interact();drag=true;set(px(e));},{passive:true});
+  ba.addEventListener('mouseenter',()=>{if(hint)hint.classList.add('gone');stopNudge();});
+  addEventListener('mousemove',e=>{if(drag)set(px(e));});
+  addEventListener('touchmove',e=>{if(drag)set(px(e));},{passive:true});
+  addEventListener('mouseup',()=>drag=false);addEventListener('touchend',()=>drag=false);
+  /* one-time nudge when the slider scrolls into view: 50 -> 74 -> 26 -> 50 */
+  function nudge(){
+    if(interacted||matchMedia('(prefers-reduced-motion:reduce)').matches){setP(50);return;}
+    nudging=true;const t0=performance.now(),dur=2600;
+    (function f(now){
+      if(!nudging)return;
+      const t=clamp((now-t0)/dur,0,1);
+      setP(50+Math.sin(ease(t)*Math.PI*2)*24);
+      if(t<1)raf=requestAnimationFrame(f);else{setP(50);nudging=false;}
+    })(performance.now());
+  }
+  const io2=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!interacted){setTimeout(nudge,450);io2.disconnect();}});},{threshold:.55});
+  io2.observe(ba);
+})();
 
 /* ===================== VR POV mouse parallax ===================== */
 (function(){const g=document.getElementById('goggles'),pov=document.getElementById('pov');if(!g)return;
