@@ -113,6 +113,17 @@ nav.scrolled .nav-inner{width:min(92%,860px);background:rgba(10,13,24,.72);backd
 .walk-hud.show{opacity:1}
 .walk-hud b{color:var(--cyan);font-weight:600}
 
+/* ===== cinematic film stage (image walkthrough) ===== */
+#film{position:fixed;inset:0;z-index:4;background:#05060d;opacity:0;visibility:hidden;transition:opacity .5s ease;pointer-events:none}
+#film.on{opacity:1;visibility:visible}
+.froom{position:absolute;inset:0;overflow:hidden;opacity:0}
+.flayer{position:absolute;inset:-5%;background-size:cover;background-position:center;will-change:transform,opacity}
+.fbloom{position:absolute;inset:0;background:radial-gradient(45% 55% at 70% 32%,rgba(255,212,150,.7),transparent 60%);mix-blend-mode:screen;opacity:0;pointer-events:none}
+.fscan{position:absolute;left:0;right:0;height:16%;background:linear-gradient(180deg,transparent,rgba(180,235,255,.30),transparent);mix-blend-mode:screen;opacity:0;pointer-events:none}
+.fline{position:absolute;left:7%;right:7%;bottom:13%;height:4px;border-radius:3px;background:linear-gradient(90deg,rgba(34,211,238,0),#22d3ee 50%,rgba(34,211,238,.15));box-shadow:0 0 26px 2px rgba(34,211,238,.8);transform-origin:left center;opacity:0;pointer-events:none}
+.fvig{position:absolute;inset:0;box-shadow:inset 0 0 240px 70px rgba(5,6,13,.72);pointer-events:none;z-index:6}
+@media(prefers-reduced-motion:reduce){.flayer{transition:opacity .3s}}
+
 /* solid sections that scroll over the fixed 3D stage */
 .solid{position:relative;z-index:10;background:var(--bg)}
 section{position:relative}
@@ -648,10 +659,10 @@ function updateWalk(force){
   const c=CH[lang][idx];
   if(force||capH.textContent!==c.h){capN.textContent=c.n;capH.textContent=c.h;capP.textContent=c.p;}
   [...dotsEl.children].forEach((b,i)=>b.classList.toggle('on',i===idx));
-  /* fade the 3D stage out after walkthrough */
-  const fade=scrollY>top+h-innerHeight*0.9;
-  stageEl.style.opacity=fade?0:1;veil.style.opacity=fade?0:1;
-  stageEl.style.pointerEvents=fade?'none':'';
+  /* the Three.js hero scene shows only before the walkthrough; the film stage takes over during it */
+  const showStage=scrollY < top - innerHeight*0.45;
+  stageEl.style.opacity=showStage?1:0;veil.style.opacity=showStage?1:0;
+  stageEl.style.pointerEvents=showStage?'':'none';
 }
 
 /* ===================== THREE.JS — holographic apartment walkthrough ===================== */
@@ -731,6 +742,88 @@ function updateWalk(force){
 })();
 
 onScroll();
+
+/* ===================== CINEMATIC FILM ENGINE (image walkthrough) ===================== */
+(function(){
+  const SRC=[
+    {a:'img/after_01.webp',b:'img/before_01.webp'},
+    {a:'img/after_02.webp',b:'img/before_02.webp'},
+    {a:'img/after_03.webp',b:'img/before_03.webp'},
+    {a:'img/after_04.webp',b:'img/before_04.webp'},
+  ];
+  const film=document.createElement('div');film.id='film';
+  const rooms=SRC.map(f=>{
+    const r=document.createElement('div');r.className='froom';
+    r.innerHTML='<div class="flayer fshell" style="background-image:url('+f.b+')"></div>'
+      +'<div class="flayer frender" style="background-image:url('+f.a+')"></div>'
+      +'<div class="fbloom"></div><div class="fscan"></div><div class="fline"></div>';
+    film.appendChild(r);
+    return {el:r,shell:r.querySelector('.fshell'),render:r.querySelector('.frender'),
+            bloom:r.querySelector('.fbloom'),scan:r.querySelector('.fscan'),line:r.querySelector('.fline')};
+  });
+  const vig=document.createElement('div');vig.className='fvig';film.appendChild(vig);
+  document.body.appendChild(film);
+  SRC.forEach(f=>{[f.a,f.b].forEach(s=>{const im=new Image();im.src=s;});});
+
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const walk=document.getElementById('walk'),stage=document.getElementById('stage');
+  let mx=0,my=0,tmx=0,tmy=0;
+  addEventListener('mousemove',e=>{tmx=e.clientX/innerWidth-0.5;tmy=e.clientY/innerHeight-0.5;},{passive:true});
+  const ease=t=>t*t*(3-2*t), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+  function setRender(R,maskFrom){
+    if(maskFrom==null){R.render.style.webkitMaskImage=R.render.style.maskImage='none';return;}
+    const p=-14+maskFrom*128;
+    const g='linear-gradient(to top, #000 '+p+'%, rgba(0,0,0,0) '+(p+14)+'%)';
+    R.render.style.webkitMaskImage=R.render.style.maskImage=g;
+    R.scan.style.top=(100-(p+7))+'%';
+  }
+
+  function loop(){
+    requestAnimationFrame(loop);
+    const top=walk.offsetTop,h=walk.offsetHeight,vh=innerHeight;
+    const inWalk=scrollY>top-vh*0.5 && scrollY<top+h-vh*0.15;
+    film.classList.toggle('on',inWalk);
+    if(!inWalk)return;
+    mx+=(tmx-mx)*0.06;my+=(tmy-my)*0.06;
+    let wp=(scrollY-top)/(h-vh);wp=clamp(wp,0,0.9999);
+    const idx=clamp(Math.floor(wp/0.25),0,3);
+    const rp=(wp-idx*0.25)/0.25;
+    rooms.forEach((R,i)=>{
+      if(i!==idx && i!==idx+1){R.el.style.opacity=0;return;}
+      if(i===idx){
+        const e=ease(rp);
+        const mat=clamp((rp-0.16)/0.34,0,1);   /* materialize 0.16..0.50 */
+        const pass=clamp((rp-0.82)/0.18,0,1);  /* pass-through 0.82..1.0 */
+        R.el.style.opacity=1-pass*0.15;R.el.style.zIndex=2;
+        if(reduce){
+          R.render.style.transform=R.shell.style.transform='none';
+          setRender(R,null);R.render.style.opacity=mat;
+          R.line.style.opacity=mat>0.6?1:0;R.bloom.style.opacity=0;R.scan.style.opacity=0;
+          return;
+        }
+        const dolly=1+e*0.16+pass*0.18;
+        R.render.style.transform='scale('+dolly+') translate('+(mx*-2.4)+'%,'+(my*-1.8)+'%)';
+        R.shell.style.transform='scale('+(1+e*0.10)+') translate('+(mx*-1.4)+'%,'+(my*-1.1)+'%)';
+        R.shell.style.opacity=1;R.render.style.opacity=1;
+        setRender(R,mat);                                   /* finishes rise from the floor */
+        const li=clamp((mat-0.5)/0.5,0,1);                  /* cyan light-line ignites */
+        R.line.style.opacity=li;R.line.style.transform='scaleX('+li+')';
+        R.bloom.style.opacity=Math.max(0,(1-Math.abs(mat-0.55)/0.45))*0.6 + (mat>=1?0.12:0);
+        R.scan.style.opacity=(mat>0.02&&mat<0.98)?0.85:0;   /* scan band rides the reveal edge */
+        R.render.style.filter=pass>0?'blur('+(pass*7)+'px) brightness('+(1+pass*0.12)+')':'none';
+      } else { /* next room peeks during the pass-through */
+        const pass=clamp((rp-0.82)/0.18,0,1);
+        R.el.style.opacity=pass;R.el.style.zIndex=3;
+        R.shell.style.opacity=1;R.render.style.opacity=0;
+        setRender(R,0);
+        R.shell.style.transform='scale('+(1.12-pass*0.12)+')';
+        R.line.style.opacity=0;R.bloom.style.opacity=0;R.scan.style.opacity=0;R.render.style.filter='none';
+      }
+    });
+  }
+  requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>
