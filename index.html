@@ -188,11 +188,12 @@ section{position:relative}
 
 /* ===== TRANSFORM before/after ===== */
 #transform{padding:120px 0}
-.ba-wrap{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;user-select:none;cursor:ew-resize;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.ba-wrap{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;user-select:none;cursor:ew-resize;box-shadow:0 40px 90px rgba(0,0,0,.5);container-type:size}
+.ba-img{position:absolute;inset:0;background-size:cover;background-position:center}
 .ba-layer{position:absolute;inset:0}
 .ba-after{z-index:1}
 .ba-before{z-index:2;width:50%;border-right:2px solid var(--cyan);overflow:hidden}
-.ba-before .ba-inner{position:absolute;inset:0;width:100vw;max-width:none}
+.ba-before .ba-inner{position:absolute;left:0;top:0;height:100%;width:100cqw;max-width:none;background-size:cover;background-position:center}
 .ba-tag{position:absolute;bottom:18px;z-index:3;font-family:'Space Grotesk';font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:7px 14px;border-radius:99px;background:rgba(6,7,13,.7);backdrop-filter:blur(6px);border:1px solid var(--line)}
 .ba-tag.l{left:18px;color:var(--muted)}.ba-tag.r{right:18px;color:var(--cyan)}
 .ba-handle{position:absolute;top:0;left:50%;z-index:4;width:44px;height:100%;transform:translateX(-50%);display:grid;place-items:center;pointer-events:none}
@@ -443,8 +444,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 <section id="transform"><div class="wrap">
   <div class="sec-head reveal"><div class="sec-tag" data-i18n="ba_tag">Tecnologia</div><h2 data-i18n="ba_h2">A planta 2D vira ambiente navegável</h2><p data-i18n="ba_p">IA generativa e motores 3D reconstroem seu projeto a partir do desenho técnico. Arraste para comparar.</p></div>
   <div class="ba-wrap reveal" id="ba">
-    <div class="ba-layer ba-after"><div class="viz viz-render"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(255,255,255,.18)" stroke-width="1.2" fill="none"><path d="M120 360 L120 150 L420 90 L420 300 Z"/><path d="M420 90 L680 150 L680 330 L420 300"/><path d="M120 360 L420 300 L680 330"/><path d="M200 330 L200 200 L340 170 L340 290 Z" stroke="rgba(34,211,238,.5)"/><path d="M470 270 L470 150 L620 180 L620 290 Z" stroke="rgba(139,92,246,.55)"/></g><circle cx="560" cy="120" r="40" fill="rgba(34,211,238,.25)"/></svg></div><span class="ba-tag r" data-i18n="ba_after">Depois · Ambiente 3D</span></div>
-    <div class="ba-layer ba-before" id="baBefore"><div class="ba-inner viz viz-blueprint"><svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(34,211,238,.55)" stroke-width="1.4" fill="none"><rect x="120" y="90" width="560" height="270"/><line x1="400" y1="90" x2="400" y2="360"/><rect x="150" y="120" width="210" height="150"/><rect x="430" y="120" width="220" height="120"/><line x1="120" y1="300" x2="400" y2="300"/><circle cx="250" cy="195" r="4" fill="rgba(34,211,238,.7)"/></g><text x="150" y="345" fill="rgba(34,211,238,.5)" font-size="13" font-family="monospace">PLANTA · 4.20 × 3.10 m</text></svg></div><span class="ba-tag l" data-i18n="ba_before">Antes · Planta 2D</span></div>
+    <div class="ba-layer ba-after"><div class="ba-img" style="background-image:url(img/plan_after.webp)"></div><span class="ba-tag r" data-i18n="ba_after">Depois · Ambiente 3D</span></div>
+    <div class="ba-layer ba-before" id="baBefore"><div class="ba-inner" style="background-image:url(img/plan_before.webp)"></div><span class="ba-tag l" data-i18n="ba_before">Antes · Planta 2D</span></div>
     <div class="ba-handle" id="baHandle"><div class="knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div></div>
   </div>
 </div></section>
