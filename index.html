@@ -287,6 +287,25 @@ section{position:relative}
 @media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}.others{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tiers{grid-template-columns:1fr}.others{grid-template-columns:1fr}}
 
+/* contact modal */
+#contactModal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+#contactModal.open{display:flex}
+.cm-overlay{position:absolute;inset:0;background:rgba(4,5,11,.72);backdrop-filter:blur(6px)}
+.cm-card{position:relative;z-index:1;width:min(94%,460px);background:linear-gradient(160deg,#0d1424,#0a0d18);border:1px solid var(--line);border-radius:22px;padding:34px 30px;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.cm-card h3{font-family:'Space Grotesk';font-size:1.45rem;margin-bottom:6px}
+.cm-card .sub{color:var(--muted);font-size:.95rem;margin-bottom:22px}
+.cm-close{position:absolute;top:14px;right:16px;background:none;border:0;color:var(--muted);cursor:pointer;font-size:24px;line-height:1}
+.cm-close:hover{color:var(--ink)}
+.cm-field{margin-bottom:14px}
+.cm-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:'Space Grotesk';letter-spacing:.03em}
+.cm-field input,.cm-field textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:inherit;font-size:15px;transition:border-color .2s}
+.cm-field input:focus,.cm-field textarea:focus{outline:none;border-color:var(--cyan)}
+.cm-field textarea{min-height:108px;resize:vertical}
+.cm-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.cm-submit{width:100%;margin-top:4px;justify-content:center}
+.cm-status{margin-top:14px;font-size:.9rem;text-align:center;min-height:20px;color:var(--muted)}
+.cm-status.ok{color:#34d399}.cm-status.err{color:#f87171}
+
 /* cta */
 #cta{padding:150px 0;text-align:center;position:relative;overflow:hidden}
 .cta-orb{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;filter:blur(90px);opacity:.22;background:var(--grad);z-index:0}
@@ -354,7 +373,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
     </div>
     <div class="nav-right">
       <div class="lang"><button id="pt" class="active" onclick="chooseLang('pt')">PT</button><button id="en" onclick="chooseLang('en')">EN</button></div>
-      <a href="#cta" class="btn btn-primary" data-i18n="nav_cta">Falar com a equipe</a>
+      <a href="#" onclick="openContact(event)" class="btn btn-primary" data-i18n="nav_cta">Falar com a equipe</a>
     </div>
   </div>
 </nav>
@@ -529,19 +548,37 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 <section id="cta"><div class="cta-orb"></div><div class="wrap inner">
   <h2 data-i18n="cta_h2">Visualize. Interaja. <span class="grad">Sinta seu projeto</span> antes da primeira pá.</h2>
   <p data-i18n="cta_p">Vamos transformar sua próxima obra em uma experiência imersiva. Fale com a equipe da Imersivo 3D.</p>
-  <div class="cta-btns"><a href="mailto:contato@imersivo3d.com" class="btn btn-primary" data-i18n="cta_b1">Solicitar demonstração →</a><a href="#services" class="btn btn-ghost" data-i18n="cta_b2">Ver planos</a></div>
+  <div class="cta-btns"><a href="#" onclick="openContact(event)" class="btn btn-primary" data-i18n="cta_b1">Solicitar demonstração →</a><a href="#services" class="btn btn-ghost" data-i18n="cta_b2">Ver planos</a></div>
 </div></section>
 
 <footer><div class="wrap">
   <div class="foot-grid">
     <div class="foot-brand"><a class="brand" href="#hero"><svg class="logo" viewBox="0 0 40 40" fill="none"><path d="M20 2 L35 11 V29 L20 38 L5 29 V11 Z" stroke="url(#lg)" stroke-width="2" fill="rgba(79,124,255,.08)"/><circle cx="20" cy="20" r="2.4" fill="#22d3ee"/></svg><span>Imersivo<b style="font-weight:300">3D</b></span></a><p data-i18n="foot_p">Damos forma ao invisível para criar mundos que inspiram. Imóveis, projetos e ambientes em experiências digitais navegáveis — captura na RIDE-DF, entregas em todo o Brasil.</p></div>
     <div class="foot-col"><h4 data-i18n="foot_c1">Soluções</h4><a href="#services" data-i18n="svc1_h">Plataforma Imersiva</a><a href="#services" data-i18n="svc2_h">Locação VR</a><a href="#services" data-i18n="svc3_h">Sob Demanda</a><a href="#services" data-i18n="svc4_h">Treinamento</a></div>
-    <div class="foot-col"><h4 data-i18n="foot_c2">Contato</h4><a href="mailto:contato@imersivo3d.com">contato@imersivo3d.com</a><a href="#demo" data-i18n="nav_demo">Demo 360°</a><a href="#cta" data-i18n="foot_demo">Agendar demonstração</a></div>
+    <div class="foot-col"><h4 data-i18n="foot_c2">Contato</h4><a href="mailto:contato@imersivo3d.com">contato@imersivo3d.com</a><a href="#demo" data-i18n="nav_demo">Demo 360°</a><a href="#" onclick="openContact(event)" data-i18n="foot_demo">Agendar demonstração</a></div>
   </div>
   <div class="foot-bottom"><span>© <span id="yr"></span> Imersivo 3D — RIDE-DF, Brasil</span><span data-i18n="foot_tag">A realidade que liberta sua criação.</span></div>
 </div></footer>
 
 </div><!-- /.solid -->
+
+<!-- ===== CONTACT MODAL ===== -->
+<div id="contactModal" aria-hidden="true">
+  <div class="cm-overlay" onclick="closeContact()"></div>
+  <div class="cm-card" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+    <button class="cm-close" onclick="closeContact()" aria-label="Fechar">&times;</button>
+    <h3 id="cmTitle" data-i18n="cm_title">Solicitar demonstração</h3>
+    <p class="sub" data-i18n="cm_sub">Conte um pouco sobre seu projeto — respondemos rápido.</p>
+    <form id="contactForm" novalidate>
+      <input type="text" name="botcheck" class="cm-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="cm-field"><label data-i18n="cm_name">Nome</label><input type="text" name="name" required></div>
+      <div class="cm-field"><label data-i18n="cm_email">E-mail</label><input type="email" name="email" required></div>
+      <div class="cm-field"><label data-i18n="cm_msg">Mensagem</label><textarea name="message" required></textarea></div>
+      <button type="submit" class="btn btn-primary cm-submit" data-i18n="cm_send">Enviar solicitação →</button>
+      <div class="cm-status" id="cmStatus" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
 
 <svg width="0" height="0"><defs><linearGradient id="lg" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#22d3ee"/><stop offset=".5" stop-color="#4f7cff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
 
@@ -591,6 +628,7 @@ const I18N={en:{
  cta_h2:"Visualize. Interact. <span class='grad'>Feel your project</span> before the first shovel.",
  cta_p:"Let's turn your next build into an immersive experience. Talk to the Imersivo 3D team.",
  cta_b1:"Request a demo →",cta_b2:"See plans",
+ cm_title:"Request a demo",cm_sub:"Tell us a little about your project — we reply fast.",cm_name:"Name",cm_email:"Email",cm_msg:"Message",cm_send:"Send request →",
  foot_p:"We give shape to the invisible to create worlds that inspire. Properties, projects and spaces turned into navigable digital experiences — capture in RIDE-DF, deliverables nationwide.",
  foot_c1:"Solutions",foot_c2:"Contact",foot_demo:"Book a demo",foot_tag:"The reality that frees your creation."
 }};
@@ -894,6 +932,39 @@ onScroll();
   if(!b||!s||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;s.style.transform='scale(1.08) translate('+(-x*5)+'%,'+(-y*5)+'%) rotateX('+(y*4)+'deg) rotateY('+(-x*5)+'deg)';});
   b.addEventListener('mouseleave',()=>{s.style.transform='none';});
+})();
+
+/* ===================== contact form (demo request) ===================== */
+const W3F_KEY='YOUR_WEB3FORMS_ACCESS_KEY';            /* paste your free Web3Forms access key here */
+const CONTACT_TO='colin@cpantin.com,imersivo3d@gmail.com';
+function openContact(e){if(e)e.preventDefault();document.getElementById('contactModal').classList.add('open');}
+function closeContact(){document.getElementById('contactModal').classList.remove('open');}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeContact();});
+(function(){
+  const f=document.getElementById('contactForm');if(!f)return;
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const st=document.getElementById('cmStatus');const pt=lang==='pt';
+    const fd=new FormData(f);const name=(fd.get('name')||'').trim(),email=(fd.get('email')||'').trim(),message=(fd.get('message')||'').trim();
+    if(fd.get('botcheck'))return;
+    if(!name||!/.+@.+\..+/.test(email)||!message){st.className='cm-status err';st.textContent=pt?'Preencha nome, e-mail e mensagem.':'Please fill in name, email and message.';return;}
+    st.className='cm-status';st.textContent=pt?'Enviando…':'Sending…';
+    const useKey=W3F_KEY&&W3F_KEY.length>15&&!W3F_KEY.startsWith('YOUR');
+    if(useKey){
+      try{
+        const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+          body:JSON.stringify({access_key:W3F_KEY,subject:'Nova solicitação de demonstração — Imersivo 3D',from_name:'Site Imersivo 3D',replyto:email,name,email,message,cc:'colin@cpantin.com'})});
+        const j=await r.json();
+        if(j.success){st.className='cm-status ok';st.textContent=pt?'Recebido! Entraremos em contato em breve.':"Sent! We'll be in touch shortly.";f.reset();}
+        else throw new Error(j.message||'fail');
+      }catch(err){st.className='cm-status err';st.textContent=pt?'Erro ao enviar. Tente novamente ou escreva para contato@imersivo3d.com.':'Could not send. Try again or email contato@imersivo3d.com.';}
+    }else{
+      const subj=encodeURIComponent('Solicitação de demonstração — Imersivo 3D');
+      const body=encodeURIComponent('Nome: '+name+'\nE-mail: '+email+'\n\n'+message);
+      window.location.href='mailto:'+CONTACT_TO+'?subject='+subj+'&body='+body;
+      st.className='cm-status ok';st.textContent=pt?'Abrindo seu aplicativo de e-mail…':'Opening your email app…';
+    }
+  });
 })();
 </script>
 </body>
