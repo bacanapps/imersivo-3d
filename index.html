@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Imersivo 3D — Transforme sua Visão em Realidade</title>
 <meta name="description" content="Imersivo 3D une modelagem 3D, Realidade Aumentada e Realidade Virtual para você visualizar e percorrer seu projeto em escala real — antes da primeira pá." />
+<link rel="canonical" id="canonical" href="https://imersivo3d.com.br/" />
+<link rel="alternate" hreflang="pt-br" href="https://imersivo3d.com.br/" />
+<link rel="alternate" hreflang="en" href="https://imersivo3d.com/" />
+<link rel="alternate" hreflang="x-default" href="https://imersivo3d.com.br/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Imersivo 3D — Tour 360°, VR e Render 3D" />
+<meta property="og:description" content="Visualize e percorra imóveis e projetos em escala real — antes da obra. Tour 360°, VR, render 3D e virtual staging. Brasília · RIDE-DF." />
+<meta property="og:image" content="https://imersivo3d.com.br/img/after_02.webp" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -341,7 +350,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
       <a href="#demo" data-i18n="nav_demo">Demo 360°</a>
     </div>
     <div class="nav-right">
-      <div class="lang"><button id="pt" class="active" onclick="setLang('pt')">PT</button><button id="en" onclick="setLang('en')">EN</button></div>
+      <div class="lang"><button id="pt" class="active" onclick="chooseLang('pt')">PT</button><button id="en" onclick="chooseLang('en')">EN</button></div>
       <a href="#cta" class="btn btn-primary" data-i18n="nav_cta">Falar com a equipe</a>
     </div>
   </div>
@@ -595,9 +604,22 @@ function setLang(l){
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});
   buildDots();updateWalk(true);
 }
+/* language by domain: imersivo3d.com -> EN, imersivo3d.com.br (and previews) -> PT */
+function setCanonical(href){const l=document.getElementById('canonical');if(l)l.href=href;}
+function applyDomainLang(){
+  const h=location.hostname;
+  if(/(^|\.)imersivo3d\.com$/.test(h)){setCanonical('https://imersivo3d.com/');setLang('en');}
+  else{setCanonical(/(^|\.)imersivo3d\.com\.br$/.test(h)?'https://imersivo3d.com.br/':location.origin+'/');}
+}
+/* on production domains the toggle switches domain so each language has a stable URL */
+function chooseLang(l){
+  const h=location.hostname, prod=/(^|\.)imersivo3d\.com(\.br)?$/.test(h);
+  if(prod){const tgt=l==='en'?'imersivo3d.com':'imersivo3d.com.br'; if(h.replace(/^www\./,'')!==tgt){location.href='https://'+tgt+'/';return;}}
+  setLang(l);
+}
 
 /* ===================== loader ===================== */
-window.addEventListener('load',()=>{capturePT();buildDots();setTimeout(()=>document.getElementById('loader').classList.add('done'),1650);});
+window.addEventListener('load',()=>{capturePT();applyDomainLang();buildDots();setTimeout(()=>document.getElementById('loader').classList.add('done'),1650);});
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 /* ===================== smooth scroll (Lenis) ===================== */
