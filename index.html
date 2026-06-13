@@ -555,7 +555,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
   <div class="foot-grid">
     <div class="foot-brand"><a class="brand" href="#hero"><svg class="logo" viewBox="0 0 40 40" fill="none"><path d="M20 2 L35 11 V29 L20 38 L5 29 V11 Z" stroke="url(#lg)" stroke-width="2" fill="rgba(79,124,255,.08)"/><circle cx="20" cy="20" r="2.4" fill="#22d3ee"/></svg><span>Imersivo<b style="font-weight:300">3D</b></span></a><p data-i18n="foot_p">Damos forma ao invisível para criar mundos que inspiram. Imóveis, projetos e ambientes em experiências digitais navegáveis — captura na RIDE-DF, entregas em todo o Brasil.</p></div>
     <div class="foot-col"><h4 data-i18n="foot_c1">Soluções</h4><a href="#services" data-i18n="svc1_h">Plataforma Imersiva</a><a href="#services" data-i18n="svc2_h">Locação VR</a><a href="#services" data-i18n="svc3_h">Sob Demanda</a><a href="#services" data-i18n="svc4_h">Treinamento</a></div>
-    <div class="foot-col"><h4 data-i18n="foot_c2">Contato</h4><a href="mailto:contato@imersivo3d.com">contato@imersivo3d.com</a><a href="#demo" data-i18n="nav_demo">Demo 360°</a><a href="#" onclick="openContact(event)" data-i18n="foot_demo">Agendar demonstração</a></div>
+    <div class="foot-col"><h4 data-i18n="foot_c2">Contato</h4><a href="mailto:imersivo3d@gmail.com">imersivo3d@gmail.com</a><a href="#demo" data-i18n="nav_demo">Demo 360°</a><a href="#" onclick="openContact(event)" data-i18n="foot_demo">Agendar demonstração</a></div>
   </div>
   <div class="foot-bottom"><span>© <span id="yr"></span> Imersivo 3D — RIDE-DF, Brasil</span><span data-i18n="foot_tag">A realidade que liberta sua criação.</span></div>
 </div></footer>
@@ -957,7 +957,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape')closeContact();});
         const j=await r.json();
         if(j.success){st.className='cm-status ok';st.textContent=pt?'Recebido! Entraremos em contato em breve.':"Sent! We'll be in touch shortly.";f.reset();}
         else throw new Error(j.message||'fail');
-      }catch(err){st.className='cm-status err';st.textContent=pt?'Erro ao enviar. Tente novamente ou escreva para contato@imersivo3d.com.':'Could not send. Try again or email contato@imersivo3d.com.';}
+      }catch(err){st.className='cm-status err';st.textContent=pt?'Erro ao enviar. Tente novamente ou escreva para imersivo3d@gmail.com.':'Could not send. Try again or email imersivo3d@gmail.com.';}
     }else{
       const subj=encodeURIComponent('Solicitação de demonstração — Imersivo 3D');
       const body=encodeURIComponent('Nome: '+name+'\nE-mail: '+email+'\n\n'+message);
