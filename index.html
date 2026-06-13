@@ -259,10 +259,13 @@ section{position:relative}
 
 /* spline */
 #spline{padding:0 0 120px}
-.spline-box{border:1px dashed rgba(34,211,238,.3);border-radius:22px;min-height:420px;display:grid;place-items:center;text-align:center;background:radial-gradient(80% 120% at 50% 0%,rgba(79,124,255,.08),transparent 60%);overflow:hidden}
-.spline-box .hint{max-width:440px;padding:40px}
-.spline-box .hint .ico{width:54px;height:54px;border-radius:14px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);display:grid;place-items:center;margin:0 auto 20px;color:var(--cyan)}
-.spline-box code{font-family:'Space Grotesk';font-size:12.5px;color:var(--cyan);background:rgba(34,211,238,.08);padding:4px 9px;border-radius:7px}
+.spline-box{position:relative;border:1px solid var(--line);border-radius:22px;min-height:480px;display:grid;place-items:end center;text-align:center;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.5);perspective:1200px}
+.spline-box .scene3d{position:absolute;inset:-5%;background-size:cover;background-position:center;will-change:transform;transition:transform .25s ease-out}
+.spline-box::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,7,13,.12),rgba(6,7,13,.5) 65%,rgba(6,7,13,.88));pointer-events:none}
+.spline-box .hint{position:relative;z-index:2;max-width:560px;padding:0 30px 42px}
+.spline-box .hint .ico{width:54px;height:54px;border-radius:14px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3);display:grid;place-items:center;margin:0 auto 18px;color:var(--cyan);backdrop-filter:blur(6px)}
+.spline-box .badge{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(34,211,238,.3);background:rgba(6,7,13,.5);padding:6px 13px;border-radius:99px;margin-bottom:16px;backdrop-filter:blur(6px)}
+.spline-box .badge i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 9px var(--cyan);animation:pulse 1.6s infinite}
 
 /* pricing */
 #pricing{padding:120px 0;border-top:1px solid var(--line)}
@@ -423,9 +426,9 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
     <p data-i18n="gal_p">Cada ambiente reconstruído em alta fidelidade, navegável em tempo real. Role e veja a profundidade.</p>
   </div>
   <div class="gal-stage">
-    <div class="render r1" data-parallax="0.10"><div class="scene-img si-a"><svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(255,255,255,.16)" stroke-width="1.2" fill="none"><path d="M60 330 L60 120 L300 70 L300 300 Z"/><path d="M300 70 L540 130 L540 300 L300 300"/><rect x="110" y="200" width="120" height="70" stroke="rgba(34,211,238,.5)"/><path d="M360 230 L360 150 L470 175 L470 250 Z" stroke="rgba(139,92,246,.5)"/></g><circle cx="430" cy="110" r="34" fill="rgba(34,211,238,.22)"/></svg></div><div class="meta">SALA DE ESTAR<b>Apartamento Noroeste</b></div></div>
-    <div class="render r2" data-parallax="0.26"><div class="scene-img si-b"><svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(255,255,255,.16)" stroke-width="1.2" fill="none"><path d="M40 320 L40 90 L250 60 L250 300 Z"/><rect x="80" y="180" width="120" height="90" stroke="rgba(34,211,238,.5)"/><path d="M300 280 L300 120 L460 150 L460 300" /></g></svg></div><div class="meta">COZINHA GOURMET<b>Escritório Paçoca</b></div></div>
-    <div class="render r3" data-parallax="0.42"><div class="scene-img si-c"><svg viewBox="0 0 460 360" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(255,255,255,.16)" stroke-width="1.2" fill="none"><rect x="60" y="120" width="200" height="130" stroke="rgba(139,92,246,.5)"/><path d="M280 250 L280 100 L420 130 L420 250 Z"/></g><circle cx="150" cy="90" r="26" fill="rgba(139,92,246,.25)"/></svg></div><div class="meta">SUÍTE MASTER<b>Boutique 360°</b></div></div>
+    <div class="render r1" data-parallax="0.10"><div class="scene-img" style="background:url(img/gal_sala.webp) center/cover"></div><div class="meta">SALA DE ESTAR<b>Apartamento Noroeste</b></div></div>
+    <div class="render r2" data-parallax="0.26"><div class="scene-img" style="background:url(img/gal_cozinha.webp) center/cover"></div><div class="meta">COZINHA GOURMET<b>Escritório Paçoca</b></div></div>
+    <div class="render r3" data-parallax="0.42"><div class="scene-img" style="background:url(img/gal_suite.webp) center/cover"></div><div class="meta">SUÍTE MASTER<b>Boutique 360°</b></div></div>
   </div>
 </section>
 
@@ -480,10 +483,10 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
     </div>
     <div class="reveal">
       <div class="goggles" id="goggles">
-        <div class="pov" id="pov"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice"><g stroke="rgba(255,255,255,.2)" stroke-width="1.3" fill="none"><path d="M-40 480 L-40 120 L360 40 L360 460 Z"/><path d="M360 40 L860 140 L860 460 L360 460"/><path d="M80 420 L80 230 L280 190 L280 380 Z" stroke="rgba(34,211,238,.5)"/><path d="M470 360 L470 180 L720 220 L720 380 Z" stroke="rgba(139,92,246,.55)"/><path d="M-40 480 L360 460 L860 460"/></g><circle cx="620" cy="120" r="46" fill="rgba(34,211,238,.22)"/></svg></div>
+        <div class="pov" id="pov" style="background:url(img/vr_pov.webp) center/cover"></div>
         <div class="vig"></div>
         <div class="reticle"></div>
-        <span class="hud tl" data-i18n="g_tl">VR · Quest 3</span><span class="hud tr">90 FPS</span><span class="hud bl" data-i18n="g_bl">Suíte master</span><span class="hud br">1:1</span>
+        <span class="hud tl" data-i18n="g_tl">VR · Quest 3</span><span class="hud tr">90 FPS</span><span class="hud bl" data-i18n="g_bl">Sala de estar</span><span class="hud br">1:1</span>
       </div>
     </div>
   </div>
@@ -496,7 +499,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
     <div class="demo-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">imersivo-studio.vercel.app/projeto/tour-360/tour/1</span><span class="live"><span class="b"></span> <span data-i18n="demo_live">Ao vivo</span></span></div>
     <iframe src="https://imersivo-studio.vercel.app/projeto/tour-360/tour/1" loading="lazy" title="Demo Clínica — Tour 360 Imersivo 3D" allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer"></iframe>
   </div>
-  <p class="demo-note" data-i18n="demo_note">Tour incorporado de imersivo-studio.vercel.app — substitua pelo link do seu projeto.</p>
+  <p class="demo-note" data-i18n="demo_note">Demonstração interativa de tour 360° produzida pela Imersivo 3D — clínica em cold shell, equipável para Odontologia, Dermatologia ou MedSpa.</p>
 </div></section>
 
 <!-- process -->
@@ -511,7 +514,16 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 </div></section>
 
 <!-- spline -->
-<section id="spline"><div class="wrap"><div class="spline-box reveal"><div class="hint"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7v10l10 5 10-5V7L12 2Z"/><path d="M12 12 2 7m10 5 10-5m-10 5v10"/></svg></div><h3 style="font-family:'Space Grotesk';font-size:1.3rem;margin-bottom:12px" data-i18n="spline_h">Cena 3D interativa (Spline)</h3><p style="color:var(--muted);font-size:.95rem" data-i18n="spline_p">Espaço reservado para a sua cena Spline. Cole a URL <code>scene.splinecode</code> aqui e ela substitui este bloco com 3D interativo em tempo real.</p></div></div></div></section>
+<section id="spline"><div class="wrap"><div class="spline-box reveal" id="model3d">
+  <div class="scene3d" id="scene3d" style="background-image:url(img/plan_after.webp)"></div>
+  <div class="hint">
+    <span class="badge"><i></i> <span data-i18n="spline_badge">Modelo 3D · tempo real</span></span>
+    <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7v10l10 5 10-5V7L12 2Z"/><path d="M12 12 2 7m10 5 10-5m-10 5v10"/></svg></div>
+    <h3 style="font-family:'Space Grotesk';font-size:1.5rem;margin-bottom:12px" data-i18n="spline_h">Explore o modelo 3D do seu projeto</h3>
+    <p style="color:var(--muted);font-size:1rem;margin-bottom:22px" data-i18n="spline_p">Gire, aproxime e percorra cada ambiente do apartamento — do layout aos acabamentos, em um modelo 3D interativo, antes da obra.</p>
+    <a href="#demo" class="btn btn-primary" data-i18n="spline_cta">Ver demonstração 360° →</a>
+  </div>
+</div></div></section>
 
 <!-- cta -->
 <section id="cta"><div class="cta-orb"></div><div class="wrap inner">
@@ -567,15 +579,15 @@ const I18N={en:{
  vr_tag:"True immersion",vr_h2:"Put the client inside the project",
  vr_p:"With the Meta Quest 3 and our platform, residents and investors walk through the property, feel the proportions and decide with confidence — a humanized experience that builds an emotional connection with the dream.",
  vr_l1:"Accessible to people who don't use AutoCAD or Revit",vr_l2:"Runs on smartphone, tablet, computer and VR headsets",vr_l3:"Built for small and medium construction businesses",
- g_tl:"VR · Quest 3",g_bl:"Master suite",
+ g_tl:"VR · Quest 3",g_bl:"Living room",
  demo_tag:"Live demonstration",demo_h2:"Explore a real 360° tour",demo_p:"Immersive tours produced by Imersivo 3D — click and drag inside the frame to look around.",demo_live:"Live",
- demo_note:"Tour embedded from imersivo-studio.vercel.app — swap for your own project link.",
+ demo_note:"Interactive 360° tour demo produced by Imersivo 3D — a clinic in cold shell, fit-out ready for Dentistry, Dermatology or a MedSpa.",
  proc_tag:"How it works",proc_h2:"Four steps from idea to immersion",
  p1_h:"Capture",p1_p:"We receive your blueprint, project or the physical space to digitize.",
  p2_h:"Model with AI",p2_p:"Generative AI and 3D engines rebuild the space at real scale.",
  p3_h:"Experience",p3_p:"Navigate in AR over the real world or dive into VR with the Quest 3.",
  p4_h:"Decide",p4_p:"Approve finishes and layout with confidence, before building.",
- spline_h:"Interactive 3D scene (Spline)",spline_p:"Reserved slot for your Spline scene. Paste the scene.splinecode URL here and it replaces this block with live interactive 3D.",
+ spline_badge:"3D model · real-time",spline_h:"Explore your project's 3D model",spline_p:"Rotate, zoom and walk every room of the apartment — from layout to finishes, in an interactive 3D model, before construction.",spline_cta:"Watch the 360° demo →",
  cta_h2:"Visualize. Interact. <span class='grad'>Feel your project</span> before the first shovel.",
  cta_p:"Let's turn your next build into an immersive experience. Talk to the Imersivo 3D team.",
  cta_b1:"Request a demo →",cta_b2:"See plans",
@@ -874,6 +886,14 @@ onScroll();
     });
   }
   requestAnimationFrame(loop);
+})();
+
+/* ===================== 3D model tilt (Spline section) ===================== */
+(function(){
+  const b=document.getElementById('model3d'),s=document.getElementById('scene3d');
+  if(!b||!s||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;s.style.transform='scale(1.08) translate('+(-x*5)+'%,'+(-y*5)+'%) rotateX('+(y*4)+'deg) rotateY('+(-x*5)+'deg)';});
+  b.addEventListener('mouseleave',()=>{s.style.transform='none';});
 })();
 </script>
 </body>
