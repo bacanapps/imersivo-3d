@@ -287,6 +287,31 @@ section{position:relative}
 @media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}.others{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tiers{grid-template-columns:1fr}.others{grid-template-columns:1fr}}
 
+/* add-ons accordion */
+#addons{padding:20px 0 120px}
+.acc-item{border:1px solid var(--line);border-radius:16px;background:var(--glass);margin-bottom:12px;overflow:hidden;transition:border-color .3s}
+.acc-item.open{border-color:rgba(34,211,238,.35)}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;background:none;border:0;cursor:pointer;color:var(--ink);font-family:'Space Grotesk';font-weight:600;font-size:1.05rem;padding:20px 22px;text-align:left}
+.acc-head .acc-chev{flex:none;color:var(--muted);transition:transform .3s,color .3s}
+.acc-item.open .acc-head .acc-chev{transform:rotate(180deg);color:var(--cyan)}
+.acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.acc-item.open .acc-panel{grid-template-rows:1fr}
+.acc-inner{overflow:hidden}
+.acc-pad{padding:0 22px 22px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;-webkit-overflow-scrolling:touch}
+#addons table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:540px}
+#addons th{text-align:left;font-family:'Space Grotesk';font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);padding:12px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--line);white-space:nowrap}
+#addons td{padding:12px 14px;color:var(--muted);border-bottom:1px solid var(--line);vertical-align:top}
+#addons tbody tr:last-child td{border-bottom:0}
+#addons td:first-child{color:var(--ink);font-weight:500}
+#addons td.price{color:var(--cyan);font-family:'Space Grotesk';font-weight:600;white-space:nowrap}
+.tbl-note{color:var(--muted-2);font-size:.84rem;margin-top:12px;line-height:1.5}
+.cq-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin:4px 0 18px;padding:0}
+.cq-list li{position:relative;padding-left:20px;color:var(--muted);font-size:.95rem}
+.cq-list li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--grad)}
+.cq-cta-text{color:var(--ink);font-size:1rem;margin:6px 0 16px}
+@media(max-width:640px){.cq-list{grid-template-columns:1fr}}
+
 /* contact modal */
 #contactModal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 #contactModal.open{display:flex}
@@ -475,6 +500,16 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
   </div>
 </div></section>
 
+<!-- ===== ADD-ONS & COMPLEMENTARY SERVICES ===== -->
+<section id="addons"><div class="wrap">
+  <div class="sec-head reveal" style="max-width:760px">
+    <div class="sec-tag" id="addons-eyebrow">Preços detalhados</div>
+    <h2 id="addons-title">Adicionais e Serviços Complementares</h2>
+    <p id="addons-sub"></p>
+  </div>
+  <div id="addonsBox" class="reveal"></div>
+</div></section>
+
 <!-- ===== TRANSFORM ===== -->
 <section id="transform"><div class="wrap">
   <div class="sec-head reveal"><div class="sec-tag" data-i18n="ba_tag">Tecnologia</div><h2 data-i18n="ba_h2">A planta 2D vira ambiente navegável</h2><p data-i18n="ba_p">IA generativa e motores 3D reconstroem seu projeto a partir do desenho técnico. Arraste para comparar.</p></div>
@@ -652,7 +687,7 @@ function setLang(l){
   document.getElementById('en').classList.toggle('active',l==='en');
   const d=l==='pt'?PT:I18N.en;
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});
-  buildDots();updateWalk(true);
+  buildDots();updateWalk(true);renderAddons(l);
 }
 /* language by domain: imersivo3d.com -> EN, imersivo3d.com.br (and previews) -> PT */
 function setCanonical(href){const l=document.getElementById('canonical');if(l)l.href=href;}
@@ -668,8 +703,123 @@ function chooseLang(l){
   setLang(l);
 }
 
+/* ===================== add-ons / complementary pricing ===================== */
+const ADDONS={
+ pt:{
+  eyebrow:"Preços detalhados",
+  title:"Adicionais e Serviços Complementares",
+  subtitle:"Veja opções que podem ser adicionadas ao seu tour 360°, projeto imersivo ou apresentação VR conforme o escopo.",
+  groups:[
+   {title:"Adicionais para Tour 360°",columns:["Adicional","Critério","Valor de referência"],rows:[
+     ["Área adicional","A cada 30 m² extras","R$ 540"],
+     ["Ponto 360° adicional","Por ponto extra","R$ 120 a R$ 180"],
+     ["Ambiente adicional fora do fluxo principal","Por ambiente","R$ 180 a R$ 350"],
+     ["Segundo pavimento","Quando exigir nova organização de percurso","+R$ 300 a R$ 600"],
+     ["Nova visita ao local","Caso o ambiente não esteja pronto ou seja necessário refazer captura","R$ 450 a R$ 800"],
+     ["Personalização com marca","Por projeto","R$ 250 a R$ 600"],
+     ["Hotspots informativos extras","Pacote com 10 unidades","R$ 150 a R$ 300"],
+     ["Hospedagem após período inicial","Mensal","R$ 49 a R$ 149/mês"],
+     ["Urgência","Entrega prioritária","+25% a +40%"],
+     ["Deslocamento fora da região base","Conforme distância","Sob cálculo"]],
+    note:"Valores de referência. O orçamento final pode variar conforme área, deslocamento, complexidade, prazo e personalizações."},
+   {title:"Experiências VR com óculos",columns:["Plano VR","Indicado para","Inclui","Duração","Valor de referência"],rows:[
+     ["VR Apresentação","Reuniões individuais, aprovação de projeto e demonstração comercial","Uso de óculos VR com tour/projeto já montado","Até 1h","R$ 690"],
+     ["VR Experience Pro","Apresentações comerciais e reuniões de aprovação","Óculos VR, suporte técnico e condução da experiência","Até 2h","R$ 1.200"],
+     ["VR Experience Business","Showrooms, clínicas, eventos internos e apresentações para múltiplos usuários","Estação imersiva assistida","Até 4h","R$ 2.400"],
+     ["VR Experience Evento","Lançamentos, stands, feiras e ativações comerciais","Experiência personalizada com suporte presencial","Sob demanda","A partir de R$ 3.500"]],
+    note:"A experiência VR é uma camada premium de apresentação aplicada sobre tours e projetos já montados na plataforma Imersivo 3D — uma experiência imersiva conduzida, não aluguel de equipamento."},
+   {title:"Serviços Complementares",columns:["Serviço","Indicado para","Quantidade / área","Valor de referência"],rows:[
+     ["Projeto Imersivo Ambiente","Projeto ainda não construído","1 ambiente / até 3 pontos renderizados","R$ 1.500"],
+     ["Projeto Imersivo Residencial","Apartamentos, casas e interiores","Até 3 ambientes / até 8 pontos","R$ 3.200"],
+     ["Projeto Imersivo Comercial","Clínicas, lojas, escritórios e showrooms","Até 150 m²","R$ 4.800"],
+     ["Projeto Imersivo Premium","Empreendimentos, sedes e espaços institucionais","Acima de 150 m²","A partir de R$ 6.500"],
+     ["Imagem 3D Profissional","Render realista para arquitetura e interiores","Por imagem","R$ 950"],
+     ["Pacote 4 imagens 3D","Apresentação comercial de projeto","4 imagens HD","R$ 3.600 a R$ 4.800"],
+     ["Maquete 3D / modelo digital básico","Modelagem volumétrica simples","Até 100 m²","R$ 1.200"],
+     ["Virtual Staging Essencial","Ambientação virtual de imóvel vazio","Por imagem","R$ 350"],
+     ["Virtual Staging Profissional","Ambientação com curadoria estética","Por imagem","R$ 490"],
+     ["Planta baixa simples","Imóveis, anúncios e apresentações","Até 100 m²","R$ 650"],
+     ["Planta 3D humanizada","Venda, locação e apresentação visual","Por pavimento","R$ 900 a R$ 1.500"]]}
+  ],
+  custom:{title:"O que pode gerar orçamento personalizado?",items:[
+    "Áreas acima de 200 m²","Múltiplos pavimentos","Deslocamento fora da RIDE-DF","Projetos com urgência",
+    "Personalizações avançadas de identidade visual","Experiências VR para eventos",
+    "Projetos com múltiplos usuários ou estações imersivas","Necessidade de nova visita ao local",
+    "Hospedagem estendida após o período inicial incluso"],
+   ctaText:"Tem um projeto fora desses formatos? Fale com a equipe e receba uma proposta personalizada.",
+   ctaBtn:"Solicitar orçamento personalizado"}
+ },
+ en:{
+  eyebrow:"Detailed pricing",
+  title:"Add-ons and Complementary Services",
+  subtitle:"Explore optional services that can be added to your 360° tour, immersive project, or VR presentation depending on the project scope.",
+  groups:[
+   {title:"360° Tour Add-ons",columns:["Add-on","Criteria","Reference price"],rows:[
+     ["Additional area","Every extra 30 m²","R$ 540"],
+     ["Additional 360° point","Per extra point","R$ 120 to R$ 180"],
+     ["Additional room outside the main flow","Per room","R$ 180 to R$ 350"],
+     ["Second floor","When a new navigation flow is required","+R$ 300 to R$ 600"],
+     ["New on-site visit","If the space is not ready or capture must be redone","R$ 450 to R$ 800"],
+     ["Brand customization","Per project","R$ 250 to R$ 600"],
+     ["Extra informational hotspots","Pack of 10","R$ 150 to R$ 300"],
+     ["Hosting after initial period","Monthly","R$ 49 to R$ 149/month"],
+     ["Rush delivery","Priority delivery","+25% to +40%"],
+     ["Travel outside base region","Based on distance","Custom quote"]],
+    note:"Reference prices only. Final pricing may vary depending on area, travel distance, complexity, timeline, and customizations."},
+   {title:"VR Headset Experiences",columns:["VR Plan","Best for","Includes","Duration","Reference price"],rows:[
+     ["VR Presentation","Individual meetings, project approval and commercial demos","VR headset use with an existing tour/project","Up to 1h","R$ 690"],
+     ["VR Experience Pro","Sales presentations and approval meetings","VR headset, technical support and guided experience","Up to 2h","R$ 1,200"],
+     ["VR Experience Business","Showrooms, clinics, internal events and multi-user presentations","Assisted immersive station","Up to 4h","R$ 2,400"],
+     ["VR Experience Event","Launches, booths, fairs and commercial activations","Custom experience with on-site support","On demand","From R$ 3,500"]],
+    note:"The VR experience is a premium presentation layer applied to tours and projects already built on the Imersivo 3D platform — a guided immersive experience, not equipment rental."},
+   {title:"Complementary Services",columns:["Service","Best for","Quantity / area","Reference price"],rows:[
+     ["Immersive Room Project","Unbuilt project","1 room / up to 3 rendered points","R$ 1,500"],
+     ["Immersive Residential Project","Apartments, houses and interiors","Up to 3 rooms / up to 8 points","R$ 3,200"],
+     ["Immersive Commercial Project","Clinics, stores, offices and showrooms","Up to 150 m²","R$ 4,800"],
+     ["Premium Immersive Project","Developments, headquarters and institutional spaces","Above 150 m²","From R$ 6,500"],
+     ["Professional 3D Image","Realistic render for architecture and interiors","Per image","R$ 950"],
+     ["4-Image 3D Package","Commercial project presentation","4 HD images","R$ 3,600 to R$ 4,800"],
+     ["3D Model / Basic Digital Model","Simple volumetric modeling","Up to 100 m²","R$ 1,200"],
+     ["Essential Virtual Staging","Virtual furnishing of an empty property","Per image","R$ 350"],
+     ["Professional Virtual Staging","Staging with aesthetic curation","Per image","R$ 490"],
+     ["Simple Floor Plan","Real estate, listings and presentations","Up to 100 m²","R$ 650"],
+     ["Humanized 3D Floor Plan","Sales, rentals and visual presentations","Per floor","R$ 900 to R$ 1,500"]]}
+  ],
+  custom:{title:"What may require a custom quote?",items:[
+    "Areas above 200 m²","Multiple floors","Travel outside the RIDE-DF base region","Rush delivery",
+    "Advanced brand customization","VR experiences for events",
+    "Multi-user experiences or immersive stations","A new on-site visit",
+    "Extended hosting after the included initial period"],
+   ctaText:"Have a project outside these formats? Contact the team and receive a custom proposal.",
+   ctaBtn:"Request a custom quote"}
+ }
+};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderAddons(l){
+  const d=ADDONS[l]||ADDONS.pt;const box=document.getElementById('addonsBox');if(!box)return;
+  const eb=document.getElementById('addons-eyebrow'),ti=document.getElementById('addons-title'),su=document.getElementById('addons-sub');
+  if(eb)eb.textContent=d.eyebrow;if(ti)ti.textContent=d.title;if(su)su.textContent=d.subtitle;
+  const chev='<svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+  let html='';
+  d.groups.forEach((g,i)=>{
+    const open=(i===0 && innerWidth>=900);
+    html+='<div class="acc-item'+(open?' open':'')+'"><button class="acc-head" aria-expanded="'+open+'" aria-controls="acc'+i+'"><span>'+esc(g.title)+'</span>'+chev+'</button>'
+      +'<div class="acc-panel" id="acc'+i+'"><div class="acc-inner"><div class="acc-pad"><div class="tbl-wrap"><table><thead><tr>'
+      +g.columns.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'
+      +g.rows.map(r=>'<tr>'+r.map((c,ci)=>'<td'+(ci===r.length-1?' class="price"':'')+'>'+esc(c)+'</td>').join('')+'</tr>').join('')
+      +'</tbody></table></div>'+(g.note?'<p class="tbl-note">'+esc(g.note)+'</p>':'')+'</div></div></div></div>';
+  });
+  const cq=d.custom;
+  html+='<div class="acc-item"><button class="acc-head" aria-expanded="false" aria-controls="accq"><span>'+esc(cq.title)+'</span>'+chev+'</button>'
+    +'<div class="acc-panel" id="accq"><div class="acc-inner"><div class="acc-pad"><ul class="cq-list">'
+    +cq.items.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><p class="cq-cta-text">'+esc(cq.ctaText)+'</p>'
+    +'<button class="btn btn-primary" onclick="openContact(event)">'+esc(cq.ctaBtn)+'</button></div></div></div></div>';
+  box.innerHTML=html;
+  box.querySelectorAll('.acc-head').forEach(h=>h.addEventListener('click',()=>{const it=h.parentElement;const op=it.classList.toggle('open');h.setAttribute('aria-expanded',op);}));
+}
+
 /* ===================== loader ===================== */
-window.addEventListener('load',()=>{capturePT();applyDomainLang();buildDots();setTimeout(()=>document.getElementById('loader').classList.add('done'),1650);});
+window.addEventListener('load',()=>{capturePT();applyDomainLang();buildDots();renderAddons(lang);setTimeout(()=>document.getElementById('loader').classList.add('done'),1650);});
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 /* ===================== smooth scroll (Lenis) ===================== */
