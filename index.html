@@ -552,7 +552,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
   <div class="sec-head reveal" style="max-width:760px"><div class="sec-tag" data-i18n="demo_tag">Vídeo · prévia</div><h2 data-i18n="demo_h2">Veja a Imersivo 3D em ação</h2><p data-i18n="demo_p">Uma prévia em vídeo dos tours imersivos e ambientes 3D produzidos pela Imersivo 3D.</p></div>
   <div class="demo-frame reveal">
     <div class="demo-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">Vídeo · Imersivo 3D</span><span class="live"><span class="b"></span> <span data-i18n="demo_live">Prévia</span></span></div>
-    <video class="demo-vid" src="media/demo.mp4" poster="media/demo-poster.jpg" controls autoplay muted loop playsinline preload="metadata"></video>
+    <video class="demo-vid" id="demoVid" src="media/demo.mp4" poster="media/demo-poster.jpg" controls autoplay muted loop playsinline preload="metadata"></video>
   </div>
   <p class="demo-note" data-i18n="demo_note">Prévia em vídeo — tours imersivos completos disponíveis sob demonstração.</p>
 </div></section>
@@ -689,6 +689,8 @@ function setLang(l){
   const d=l==='pt'?PT:I18N.en;
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k]!=null)el.innerHTML=d[k];});
   buildDots();updateWalk(true);renderAddons(l);
+  var dv=document.getElementById('demoVid');
+  if(dv){var want=(l==='en')?'media/demo-en.mp4':'media/demo.mp4';if(dv.getAttribute('src')!==want){dv.setAttribute('src',want);dv.load();var pr=dv.play();if(pr&&pr.catch)pr.catch(function(){});}}
 }
 /* language by domain: imersivo3d.com -> EN, imersivo3d.com.br (and previews) -> PT */
 function setCanonical(href){const l=document.getElementById('canonical');if(l)l.href=href;}
