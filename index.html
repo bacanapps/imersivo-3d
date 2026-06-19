@@ -288,6 +288,10 @@ section{position:relative}
 @media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}.others{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tiers{grid-template-columns:1fr}.others{grid-template-columns:1fr}}
 
+.price-cta{text-align:center;margin-top:38px}
+.price-cta p{color:var(--muted);font-size:1.06rem;margin:0 auto 18px;max-width:560px}
+.tier .tprice[data-i18n="t_quote"]{font-size:1.05rem;-webkit-text-fill-color:var(--cyan);color:var(--cyan)}
+
 /* add-ons accordion */
 #addons{padding:20px 0 120px}
 .acc-item{border:1px solid var(--line);border-radius:16px;background:var(--glass);margin-bottom:12px;overflow:hidden;transition:border-color .3s}
@@ -456,10 +460,10 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 <section id="services"><div class="wrap">
   <div class="sec-head reveal"><div class="sec-tag" data-i18n="svc_tag">Soluções</div><h2 data-i18n="svc_h2">Da planta ao mundo real — quatro formas de experimentar</h2></div>
   <div class="svc-grid">
-    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><path d="M12 3v18"/></svg></div><h3 data-i18n="svc1_h">Tour 360° de Ambientes</h3><p data-i18n="svc1_p">Captura presencial com câmera 360°, montagem na plataforma e link online navegável. Do consultório ao showroom — pronto para compartilhar.</p><span class="tag" data-i18n="svc1_t">A partir de R$ 990</span></div>
-    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="10" rx="5"/><circle cx="8" cy="12" r="2.2"/><circle cx="16" cy="12" r="2.2"/></svg></div><h3 data-i18n="svc2_h">Experiência VR Premium</h3><p data-i18n="svc2_p">Apresentação imersiva conduzida com óculos VR e suporte técnico — para aprovar projetos e fechar vendas. Uma experiência, não um aluguel.</p><span class="tag" data-i18n="svc2_t">A partir de R$ 690</span></div>
-    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div><h3 data-i18n="svc3_h">Projeto Imersivo</h3><p data-i18n="svc3_p">Renderização de projetos ainda não construídos: ambientes navegáveis e realistas a partir da planta — para vender e decidir antes da obra.</p><span class="tag" data-i18n="svc3_t">A partir de R$ 1.500</span></div>
-    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><h3 data-i18n="svc4_h">Imagem 3D & Virtual Staging</h3><p data-i18n="svc4_p">Renders profissionais, ambientação virtual de imóveis vazios e plantas humanizadas para anúncios, locação e vendas.</p><span class="tag" data-i18n="svc4_t">A partir de R$ 350</span></div>
+    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><path d="M12 3v18"/></svg></div><h3 data-i18n="svc1_h">Tour 360° de Ambientes</h3><p data-i18n="svc1_p">Captura presencial com câmera 360°, montagem na plataforma e link online navegável. Do consultório ao showroom — pronto para compartilhar.</p><span class="tag" data-i18n="svc1_t">Captura + plataforma</span></div>
+    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="10" rx="5"/><circle cx="8" cy="12" r="2.2"/><circle cx="16" cy="12" r="2.2"/></svg></div><h3 data-i18n="svc2_h">Experiência VR Premium</h3><p data-i18n="svc2_p">Apresentação imersiva conduzida com óculos VR e suporte técnico — para aprovar projetos e fechar vendas. Uma experiência, não um aluguel.</p><span class="tag" data-i18n="svc2_t">Experiência conduzida</span></div>
+    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></div><h3 data-i18n="svc3_h">Projeto Imersivo</h3><p data-i18n="svc3_p">Renderização de projetos ainda não construídos: ambientes navegáveis e realistas a partir da planta — para vender e decidir antes da obra.</p><span class="tag" data-i18n="svc3_t">Render pré-obra</span></div>
+    <div class="svc reveal"><div class="glow"></div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><h3 data-i18n="svc4_h">Imagem 3D & Virtual Staging</h3><p data-i18n="svc4_p">Renders profissionais, ambientação virtual de imóveis vazios e plantas humanizadas para anúncios, locação e vendas.</p><span class="tag" data-i18n="svc4_t">Render & ambientação</span></div>
   </div>
 </div></section>
 
@@ -480,31 +484,34 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 <!-- ===== PRICING ===== -->
 <section id="pricing"><div class="wrap">
   <div class="sec-head reveal" style="max-width:760px">
-    <div class="sec-tag" data-i18n="pricing_tag">Planos & preços</div>
-    <h2 data-i18n="pricing_h2">Tour 360° <span class="mut">a partir de</span> R$ 990</h2>
-    <p data-i18n="pricing_p">Captura presencial, montagem na plataforma e link online. Escolha pela área e pela quantidade de pontos 360°.</p>
+    <div class="sec-tag" data-i18n="pricing_tag">Planos & soluções</div>
+    <h2 data-i18n="pricing_h2">Soluções 360° <span class="mut">sob medida</span> para o seu projeto</h2>
+    <p data-i18n="pricing_p">Captura presencial, montagem na plataforma e link online navegável — dimensionados pela área do espaço e pela quantidade de pontos 360°.</p>
   </div>
   <div class="tiers">
-    <div class="tier reveal"><div class="tname">Mini Tour 360</div><div class="tprice">R$ 790</div><div class="tmeta" data-i18n="t_mini_m">Até 30 m² · 3 pontos</div><div class="tdesc" data-i18n="t_mini_d">Ambiente único: sala pequena, consultório ou studio compacto.</div></div>
-    <div class="tier reveal"><div class="tname">Start 360</div><div class="tprice">R$ 990</div><div class="tmeta" data-i18n="t_start_m">Até 50 m² · 5 pontos</div><div class="tdesc" data-i18n="t_start_d">Studios, salas comerciais e consultórios. Navegação online e link compartilhável.</div></div>
-    <div class="tier feat reveal"><div class="badge" data-i18n="t_pro_badge">Mais vendido</div><div class="tname">Pro 360</div><div class="tprice">R$ 1.690</div><div class="tmeta" data-i18n="t_pro_m">Até 100 m² · 10 pontos</div><div class="tdesc" data-i18n="t_pro_d">Apartamentos e escritórios. Hotspots, identificação de ambientes e identidade visual.</div></div>
-    <div class="tier reveal"><div class="tname">Business 360</div><div class="tprice">R$ 2.900</div><div class="tmeta" data-i18n="t_biz_m">Até 200 m² · 20 pontos</div><div class="tdesc" data-i18n="t_biz_d">Clínicas e showrooms. Menu, fotos complementares e apresentação personalizada.</div></div>
-    <div class="tier reveal"><div class="tname">Enterprise 360</div><div class="tprice" style="font-size:1.15rem" data-i18n="t_ent_p">Sob orçamento</div><div class="tmeta" data-i18n="t_ent_m">+200 m² · multipavimento</div><div class="tdesc" data-i18n="t_ent_d">Grandes áreas e múltiplos pavimentos. Solução imersiva sob medida.</div></div>
+    <div class="tier reveal"><div class="tname">Mini Tour 360</div><div class="tprice" data-i18n="t_quote">Sob consulta</div><div class="tmeta" data-i18n="t_mini_m">Até 30 m² · 3 pontos</div><div class="tdesc" data-i18n="t_mini_d">Ambiente único: sala pequena, consultório ou studio compacto.</div></div>
+    <div class="tier reveal"><div class="tname">Start 360</div><div class="tprice" data-i18n="t_quote">Sob consulta</div><div class="tmeta" data-i18n="t_start_m">Até 50 m² · 5 pontos</div><div class="tdesc" data-i18n="t_start_d">Studios, salas comerciais e consultórios. Navegação online e link compartilhável.</div></div>
+    <div class="tier feat reveal"><div class="badge" data-i18n="t_pro_badge">Mais vendido</div><div class="tname">Pro 360</div><div class="tprice" data-i18n="t_quote">Sob consulta</div><div class="tmeta" data-i18n="t_pro_m">Até 100 m² · 10 pontos</div><div class="tdesc" data-i18n="t_pro_d">Apartamentos e escritórios. Hotspots, identificação de ambientes e identidade visual.</div></div>
+    <div class="tier reveal"><div class="tname">Business 360</div><div class="tprice" data-i18n="t_quote">Sob consulta</div><div class="tmeta" data-i18n="t_biz_m">Até 200 m² · 20 pontos</div><div class="tdesc" data-i18n="t_biz_d">Clínicas e showrooms. Menu, fotos complementares e apresentação personalizada.</div></div>
+    <div class="tier reveal"><div class="tname">Enterprise 360</div><div class="tprice" data-i18n="t_quote">Sob consulta</div><div class="tmeta" data-i18n="t_ent_m">+200 m² · multipavimento</div><div class="tdesc" data-i18n="t_ent_d">Grandes áreas e múltiplos pavimentos. Solução imersiva sob medida.</div></div>
   </div>
-  <p class="price-note" data-i18n="price_note">Valores de referência. Áreas maiores, deslocamento fora da RIDE-DF, urgência e personalizações avançadas sob orçamento.</p>
   <div class="others">
-    <div class="oth reveal"><div class="ol" data-i18n="oth_vr">Experiência VR</div><div class="ov">R$ 690</div></div>
-    <div class="oth reveal"><div class="ol" data-i18n="oth_proj">Projeto Imersivo (não construído)</div><div class="ov">R$ 1.500</div></div>
-    <div class="oth reveal"><div class="ol" data-i18n="oth_img">Imagem 3D alta resolução</div><div class="ov">R$ 950</div></div>
-    <div class="oth reveal"><div class="ol" data-i18n="oth_stg">Virtual Staging</div><div class="ov">R$ 350 <span>/imagem</span></div></div>
-    <div class="oth reveal"><div class="ol" data-i18n="oth_plan">Planta baixa simples</div><div class="ov">R$ 650</div></div>
+    <div class="oth reveal"><div class="ol" data-i18n="oth_vr">Experiência VR</div></div>
+    <div class="oth reveal"><div class="ol" data-i18n="oth_proj">Projeto Imersivo (não construído)</div></div>
+    <div class="oth reveal"><div class="ol" data-i18n="oth_img">Imagem 3D alta resolução</div></div>
+    <div class="oth reveal"><div class="ol" data-i18n="oth_stg">Virtual Staging</div></div>
+    <div class="oth reveal"><div class="ol" data-i18n="oth_plan">Planta baixa simples</div></div>
+  </div>
+  <div class="price-cta reveal">
+    <p data-i18n="pricing_cta_text">Cada projeto é único. Conte para a gente o que você precisa e receba um orçamento sob medida.</p>
+    <a href="#" onclick="openContact(event)" class="btn btn-primary" data-i18n="pricing_cta">Solicitar orçamento →</a>
   </div>
 </div></section>
 
 <!-- ===== ADD-ONS & COMPLEMENTARY SERVICES ===== -->
 <section id="addons"><div class="wrap">
   <div class="sec-head reveal" style="max-width:760px">
-    <div class="sec-tag" id="addons-eyebrow">Preços detalhados</div>
+    <div class="sec-tag" id="addons-eyebrow">Detalhes & escopo</div>
     <h2 id="addons-title">Adicionais e Serviços Complementares</h2>
     <p id="addons-sub"></p>
   </div>
@@ -622,7 +629,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bg-
 /* ===================== i18n ===================== */
 const I18N={en:{
  nav_tour:"Walkthrough",nav_services:"Solutions",nav_gallery:"Renders",nav_pricing:"Plans",nav_demo:"360° Demo",nav_cta:"Talk to us",
- pricing_tag:"Plans & pricing",pricing_h2:"360° Tours <span class='mut'>from</span> R$ 990",pricing_p:"On-site capture, platform assembly and an online link. Choose by area and number of 360° points.",
+ pricing_tag:"Plans & solutions",pricing_h2:"360° solutions <span class='mut'>tailored</span> to your project",pricing_p:"On-site capture, platform assembly and a navigable online link — scoped by the size of the space and the number of 360° points.",
+ t_quote:"On request",pricing_cta_text:"Every project is unique. Tell us what you need and get a tailored quote.",pricing_cta:"Request a quote →",
  t_mini_m:"Up to 30 m² · 3 points",t_mini_d:"A single space: small room, office or compact studio.",
  t_start_m:"Up to 50 m² · 5 points",t_start_d:"Studios, commercial rooms and offices. Online navigation and shareable link.",
  t_pro_badge:"Best seller",t_pro_m:"Up to 100 m² · 10 points",t_pro_d:"Apartments and offices. Hotspots, room labels and visual identity.",
@@ -642,10 +650,10 @@ const I18N={en:{
  stats_p:"2D blueprints leave room for doubt. We put the client inside the build, in real time — cutting rework and material waste.",
  stat1:"Full immersion in every room",stat2:"Real scale — exact project size",stat3:"AR + VR on one platform",stat4:"Web, mobile and VR headsets",
  svc_tag:"Solutions",svc_h2:"From blueprint to the real world — four ways to experience it",
- svc1_h:"360° Space Tours",svc1_p:"On-site 360° camera capture, platform assembly and a navigable online link. From a clinic to a showroom — ready to share.",svc1_t:"From R$ 990",
- svc2_h:"Premium VR Experience",svc2_p:"A guided immersive presentation with VR headsets and technical support — to approve projects and close sales. An experience, not a rental.",svc2_t:"From R$ 690",
- svc3_h:"Immersive Project (unbuilt)",svc3_p:"Rendering of not-yet-built projects: realistic, navigable spaces from the blueprint — to sell and decide before breaking ground.",svc3_t:"From R$ 1,500",
- svc4_h:"3D Imagery & Virtual Staging",svc4_p:"Professional renders, virtual staging of empty properties and humanized floor plans for listings, rentals and sales.",svc4_t:"From R$ 350",
+ svc1_h:"360° Space Tours",svc1_p:"On-site 360° camera capture, platform assembly and a navigable online link. From a clinic to a showroom — ready to share.",svc1_t:"Capture + platform",
+ svc2_h:"Premium VR Experience",svc2_p:"A guided immersive presentation with VR headsets and technical support — to approve projects and close sales. An experience, not a rental.",svc2_t:"Guided experience",
+ svc3_h:"Immersive Project (unbuilt)",svc3_p:"Rendering of not-yet-built projects: realistic, navigable spaces from the blueprint — to sell and decide before breaking ground.",svc3_t:"Pre-construction render",
+ svc4_h:"3D Imagery & Virtual Staging",svc4_p:"Professional renders, virtual staging of empty properties and humanized floor plans for listings, rentals and sales.",svc4_t:"Render & staging",
  gal_tag:"Visualization",gal_h2:"Renders that look like photos —",gal_h2b:"that you can step inside.",gal_p:"Every room rebuilt in high fidelity, navigable in real time. Scroll to feel the depth.",
  ba_tag:"Technology",ba_h2:"The 2D blueprint becomes a walkable space",ba_p:"Generative AI and 3D engines rebuild your project from the technical drawing. Drag to compare.",
  ba_before:"Before · 2D Plan",ba_after:"After · 3D Space",ba_hint:"Drag · 2D ⇄ 3D",
@@ -709,7 +717,7 @@ function chooseLang(l){
 /* ===================== add-ons / complementary pricing ===================== */
 const ADDONS={
  pt:{
-  eyebrow:"Preços detalhados",
+  eyebrow:"Detalhes & escopo",
   title:"Adicionais e Serviços Complementares",
   subtitle:"Veja opções que podem ser adicionadas ao seu tour 360°, projeto imersivo ou apresentação VR conforme o escopo.",
   groups:[
@@ -753,7 +761,7 @@ const ADDONS={
    ctaBtn:"Solicitar orçamento personalizado"}
  },
  en:{
-  eyebrow:"Detailed pricing",
+  eyebrow:"Details & scope",
   title:"Add-ons and Complementary Services",
   subtitle:"Explore optional services that can be added to your 360° tour, immersive project, or VR presentation depending on the project scope.",
   groups:[
@@ -808,9 +816,9 @@ function renderAddons(l){
     const open=(i===0 && innerWidth>=900);
     html+='<div class="acc-item'+(open?' open':'')+'"><button class="acc-head" aria-expanded="'+open+'" aria-controls="acc'+i+'"><span>'+esc(g.title)+'</span>'+chev+'</button>'
       +'<div class="acc-panel" id="acc'+i+'"><div class="acc-inner"><div class="acc-pad"><div class="tbl-wrap"><table><thead><tr>'
-      +g.columns.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'
-      +g.rows.map(r=>'<tr>'+r.map((c,ci)=>'<td'+(ci===r.length-1?' class="price"':'')+'>'+esc(c)+'</td>').join('')+'</tr>').join('')
-      +'</tbody></table></div>'+(g.note?'<p class="tbl-note">'+esc(g.note)+'</p>':'')+'</div></div></div></div>';
+      +g.columns.slice(0,-1).map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'
+      +g.rows.map(r=>'<tr>'+r.slice(0,-1).map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')
+      +'</tbody></table></div></div></div></div></div>';
   });
   const cq=d.custom;
   html+='<div class="acc-item"><button class="acc-head" aria-expanded="false" aria-controls="accq"><span>'+esc(cq.title)+'</span>'+chev+'</button>'
